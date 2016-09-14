@@ -1,3 +1,5 @@
+// Task #2
+
 $(document).ready(function(){
 
 	function scrollLeft(evt) {
@@ -35,8 +37,8 @@ $(document).ready(function(){
 	var position = 0;
 	var maxPosition = (itemsWidth - contentWidth);
 
-	// attach click handlers for the `$left` and `$right` buttons,
-	// that call the `scrollLeft(..)` and `scrollRight(..)` functions,
-	// respectively
+	// Add event handlers to left and right buttons of carousel
+	$left.on("click", scrollLeft);
+	$right.on("click", scrollRight);	
 
 });
