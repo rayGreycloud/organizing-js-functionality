@@ -32,5 +32,3 @@ const Header = (function () {
   };
 
 })();
-
-$(document).ready(Header.init);

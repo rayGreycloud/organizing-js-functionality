@@ -21,5 +21,3 @@ const Details = (function () {
   };
 
 })();
-
-$(document).ready(Details.init);
