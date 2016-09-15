@@ -26,12 +26,17 @@ const Carousel = (function () {
 		$items.css({ left: (-position) + "px" });
 	}
 
+	function clickPerson(evt) {
+		const ID = $(evt.target).attr("rel").replace(/^.*(\d+)$/,"$1");
+
+		Details.loadPerson(ID);
+	}
+
 	function init() {
 		$content = $("[rel=js-carousel] > [rel=js-content]");
 		$items = $content.children("[rel=js-items]");
 		$left = $("[rel=js-carousel] > [rel=js-controls] > [rel=js-left]");
 		$right = $("[rel=js-carousel] > [rel=js-controls] > [rel=js-right]");
-
 
 		contentWidth = $content.width();
 		itemsWidth = $items.width();
@@ -40,9 +45,11 @@ const Carousel = (function () {
 		// Add event handlers to left and right buttons of carousel
 		$left.on("click", scrollLeft);
 		$right.on("click", scrollRight);
+
+		$items.on("click", "[rel*='js-item-']", clickPerson);
 	}
 
-	let $content, $items, $left, $right, contentWidth, itemsWidth, position, maxPosition;	
+	let $content, $items, $left, $right, contentWidth, itemsWidth, position, maxPosition;
 
 	return {
     init: init

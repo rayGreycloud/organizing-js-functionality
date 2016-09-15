@@ -2,8 +2,7 @@
 
 const Details = (function () {
 
-	function loadPerson(evt) {
-		const ID = $(evt.target).attr("rel").replace(/^.*(\d+)$/,"$1");
+	function loadPerson(ID) {
 		$.ajax("details/" + ID + ".html", { dataType: "text" })
 			.then(function(contents) {
 				$content.html(contents);
@@ -11,16 +10,14 @@ const Details = (function () {
 	}
 
 	function init() {
-		$items = $("[rel=js-carousel] > [rel=js-content] > [rel=js-items]");
 		$content = $("[rel=js-details]");
-		
-		$items.on("click", "[rel*='js-item-']", loadPerson);
 	}
 
-	let $items, $content;
+	let $content;
 
 	return {
-    init: init
+    init: init,
+		loadPerson: loadPerson
   };
 
 })();
