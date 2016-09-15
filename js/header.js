@@ -1,11 +1,7 @@
-// Task #1
-// put event handlers for header links here
-$(document).ready(function () {
-  // get modal reference
-  let $modal = $("[rel='js-modal']");
+// Task #3 Refactor into modules
+const Header = (function () {
 
-  // event handlers
-  $("[rel='js-controls']").on("click", "[rel*='js-']", function (evt) {
+  function headerLinkClicks(evt) {
     // stop reload
     evt.preventDefault();
     evt.stopPropagation(); // Unnecessary but no harm to use all 3
@@ -19,6 +15,22 @@ $(document).ready(function () {
     .then( function(contents) {
       $modal.html(contents).show();
     });
-  });
+  }
 
-});
+  function init() {
+    // get modal reference
+    $modal = $("[rel='js-modal']");
+
+    // event handlers
+    $("[rel='js-controls']").on("click", "[rel*='js-']", headerLinkClicks);
+  }
+
+  let $modal;
+
+  return {
+    init: init
+  };
+
+})();
+
+$(document).ready(Header.init);
