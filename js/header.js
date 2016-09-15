@@ -1,34 +1,47 @@
-// Task #3 Refactor into modules
+// Task #4
 const Header = (function () {
 
   function headerLinkClicks(evt) {
-    // stop reload
-    evt.preventDefault();
-    evt.stopPropagation(); // Unnecessary but no harm to use all 3
-    evt.stopImmediatePropagation(); // ditto
+    if ($modal.is(":visible")) {
+			return closeModal(evt);
+		}
 
-    // grab href value of clicked link
+    evt.preventDefault();
+    evt.stopPropagation();
+    evt.stopImmediatePropagation();
+
     const url = $(evt.target).attr("href");
-    // ajax call
+
     $.ajax(url,{ dataType: "text" })
-    // callback to show contents in modal
     .then( function(contents) {
-      $modal.html(contents).show();
+      $content.html(contents);
+      $modal.show();
     });
   }
 
-  function init() {
-    // get modal reference
-    $modal = $("[rel='js-modal']");
+  function closeModal(evt) {
+		evt.preventDefault();
+		evt.stopPropagation();
+		evt.stopImmediatePropagation();
 
-    // event handlers
+		$content.empty();
+		$modal.hide();
+	}
+  
+  function init() {
+    $modal = $("[rel='js-modal']");
+    $close = $modal.children("[rel='js-close']");
+		$content = $modal.children("[rel='js-content']");
+
+		$close.on("click",closeModal);
+
     $("[rel='js-controls']").on("click", "[rel*='js-']", headerLinkClicks);
   }
 
-  let $modal;
+  let $modal, $close, $content;
 
-  return {
-    init: init
-  };
+  EVT.on("init", init);
+
+  return {};
 
 })();

@@ -1,6 +1,9 @@
-// Complete Task #3
-$(document).ready(function () {
-  Header.init();
-  Carousel.init();
-  Details.init();
-});
+(function(global){
+
+	global.EVT = new EventEmitter2();
+
+	$(document).ready(function(){
+		EVT.emit("init");
+	});
+
+})(window);

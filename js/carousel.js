@@ -1,5 +1,3 @@
-// Task #3 - Refactor into module
-
 const Carousel = (function () {
 
 	function scrollLeft(evt) {
@@ -27,9 +25,12 @@ const Carousel = (function () {
 	}
 
 	function clickPerson(evt) {
-		const ID = $(evt.target).attr("rel").replace(/^.*(\d+)$/,"$1");
+		evt.preventDefault();
+		evt.stopPropagation();
+		evt.stopImmediatePropagation();
 
-		Details.loadPerson(ID);
+		const ID = $(evt.target).attr("rel").replace(/^.*(\d+)$/,"$1");
+		EVT.emit("person-selected", ID);
 	}
 
 	function init() {
@@ -42,7 +43,7 @@ const Carousel = (function () {
 		itemsWidth = $items.width();
 		position = 0;
 		maxPosition = (itemsWidth - contentWidth);
-		// Add event handlers to left and right buttons of carousel
+
 		$left.on("click", scrollLeft);
 		$right.on("click", scrollRight);
 
@@ -51,8 +52,8 @@ const Carousel = (function () {
 
 	let $content, $items, $left, $right, contentWidth, itemsWidth, position, maxPosition;
 
-	return {
-    init: init
-  };
+	EVT.on("init", init);
+
+	return {};
 
 })();
